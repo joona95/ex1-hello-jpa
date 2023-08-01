@@ -18,7 +18,9 @@ public class JpaMain {
 
         try {
             Member member = em.find(Member.class, 150L);
-            member.setName("ZZZZZ");
+            member.setName("AAAAA");
+
+            em.detach(member);
 
             System.out.println("======================");
 
