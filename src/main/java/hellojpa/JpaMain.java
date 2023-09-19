@@ -21,33 +21,37 @@ public class JpaMain {
 
         try {
 
+            Team team1 = new Team();
+            team1.setName("team1");
+            em.persist(team1);
+
             Member member1 = new Member();
-            member1.setUsername("hello");
+            member1.setUsername("member1");
+            member1.setTeam(team1);
             em.persist(member1);
 
+            Team team2 = new Team();
+            team2.setName("team2");
+            em.persist(team2);
+
             Member member2 = new Member();
-            member2.setUsername("hello");
+            member2.setUsername("member2");
+            member2.setTeam(team2);
             em.persist(member2);
 
             em.flush();
             em.clear();
 
-            Member m1 = em.find(Member.class, member1.getId());
-            Member m2 = em.getReference(Member.class, member2.getId());
-
-            System.out.println("m1 == m2: " + (m1.getClass() == m2.getClass()));
-            System.out.println("m1: " + (m1 instanceof Member));
-            System.out.println("m2: " + (m2 instanceof Member));
-
-            Hibernate.initialize(m2);
-            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(m2));
             /*
-            Member findMember = em.getReference(Member.class, member1.getId());
-            System.out.println("findMember = " + findMember.getClass());
-            System.out.println("findMember.id = " + findMember.getId());
-            System.out.println("findMember.username = " + findMember.getUsername());
-            System.out.println("findMember.username = " + findMember.getUsername());
+            Member m = em.find(Member.class, member1.getId());
+
+            System.out.println("m = " + m.getTeam().getClass());
+            System.out.println("======================");
+            System.out.println(m.getTeam().getName());
+            System.out.println("======================");
              */
+            List<Member> members = em.createQuery("select m from Member m left join fetch m.team", Member.class)
+                    .getResultList();
 
             tx.commit();
         } catch (Exception e) {
