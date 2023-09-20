@@ -22,15 +22,15 @@ public class Period {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    private void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    private LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    private void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 }
